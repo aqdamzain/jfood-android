@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">jfood-android</string>
+    <string name="register_click">Register Now</string>
+    <string name="email_field">Email</string>
+    <string name="password_field">Password</string>
+    <string name="login_click">Login</string>
+</resources>
