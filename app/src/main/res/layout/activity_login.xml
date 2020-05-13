@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="@drawable/gradient_background2"
+    tools:context=".view.LoginActivity">
 
     <TextView
         android:id="@+id/tv_register"
@@ -14,8 +15,8 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/register_click"
-        android:textColor="#347aeb"
-        android:textSize="16dp"
+        android:textColor="#fff"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:background="#fff"
+        android:padding="8dp"
         android:ems="10"
         android:hint="@string/email_field"
         android:inputType="textEmailAddress"
@@ -34,12 +37,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <EditText
         android:id="@+id/edt_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
@@ -54,10 +59,12 @@
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:text="@string/login_click"
+        android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_password" />

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.InvoiceActivity">
+
+    <TextView
+        android:id="@+id/labelInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Invoice"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:text="Invoice ID :"
+        app:layout_constraintStart_toStartOf="@+id/labelInvoice"
+        app:layout_constraintTop_toBottomOf="@+id/labelInvoice" />
+
+    <TextView
+        android:id="@+id/LabelDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Issue Date :"
+        app:layout_constraintStart_toStartOf="@+id/labelId"
+        app:layout_constraintTop_toBottomOf="@+id/labelId" />
+
+    <TextView
+        android:id="@+id/labelPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Payment Type :"
+        app:layout_constraintStart_toStartOf="@+id/LabelDate"
+        app:layout_constraintTop_toBottomOf="@+id/LabelDate" />
+
+    <TextView
+        android:id="@+id/labelStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Invoice Status :"
+        app:layout_constraintStart_toStartOf="@+id/labelPayment"
+        app:layout_constraintTop_toBottomOf="@+id/labelPayment" />
+
+    <TextView
+        android:id="@+id/tv_totalInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="64dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelStatus" />
+
+    <TextView
+        android:id="@+id/labelTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="Total Price :"
+        app:layout_constraintEnd_toStartOf="@+id/tv_totalInvoice"
+        app:layout_constraintTop_toTopOf="@+id/tv_totalInvoice" />
+
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay Invoice"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.158"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Cancel Invoice"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_pay"
+        app:layout_constraintTop_toBottomOf="@+id/labelTotal" />
+
+    <TextView
+        android:id="@+id/tv_invoiceId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="ID"
+        app:layout_constraintStart_toEndOf="@+id/labelId"
+        app:layout_constraintTop_toTopOf="@+id/labelId" />
+
+    <TextView
+        android:id="@+id/tv_invoiceDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00-00-0000 0000"
+        app:layout_constraintStart_toStartOf="@+id/tv_invoiceId"
+        app:layout_constraintTop_toTopOf="@+id/LabelDate" />
+
+    <TextView
+        android:id="@+id/tv_invoiceType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        app:layout_constraintStart_toStartOf="@+id/tv_invoiceDate"
+        app:layout_constraintTop_toTopOf="@+id/labelPayment" />
+
+    <TextView
+        android:id="@+id/tv_invoiceStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        app:layout_constraintStart_toStartOf="@+id/tv_invoiceType"
+        app:layout_constraintTop_toTopOf="@+id/labelStatus" />
+</androidx.constraintlayout.widget.ConstraintLayout>

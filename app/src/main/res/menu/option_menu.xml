@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon = "@drawable/ic_autorenew_white_24dp"
+        app:showAsAction="always" />
+    <group android:menuCategory="container">
+        <item android:id="@+id/cart"
+            android:title="@string/cart"
+            android:icon = "@drawable/ic_shopping_cart_white_24dp"
+            app:showAsAction="always" />
+        <item android:id="@+id/history"
+            android:title="@string/history" />
+        <item android:id="@+id/logout"
+            android:title="@string/logout" />
+    </group>
+</menu>

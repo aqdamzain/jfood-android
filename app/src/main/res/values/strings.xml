@@ -4,4 +4,15 @@
     <string name="email_field">Email</string>
     <string name="password_field">Password</string>
     <string name="login_click">Login</string>
+    <string name="food">Food</string>
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="history">Invoice History</string>
+    <string name="logout">logout</string>
+    <string name="cart">Cart</string>
+    <string name="price">Price</string>
+    <string name="category">Category</string>
+    <string name="menu_name">Menu Name</string>
+    <string name="seller">Seller</string>
+    <string name="location">Location</string>
 </resources>
