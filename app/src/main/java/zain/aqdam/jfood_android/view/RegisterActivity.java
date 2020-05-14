@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +16,7 @@ import zain.aqdam.jfood_android.repository.ApiClient;
 import zain.aqdam.jfood_android.repository.JFoodApiService;
 import zain.aqdam.jfood_android.R;
 import zain.aqdam.jfood_android.model.Customer;
+import zain.aqdam.jfood_android.repository.UserRepository;
 
 /**
  * is used to create register interface for
@@ -59,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
-                    registerRequest(inputName, inputEmail, inputPassword);
+                    registerRequest(inputEmail, inputName, inputPassword);
                 }
 
             }

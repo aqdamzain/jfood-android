@@ -52,11 +52,18 @@ public class MainActivity extends AppCompatActivity {
                 new Observer<ArrayList<Food>>() {
                     @Override
                     public void onChanged(ArrayList<Food> foods) {
-                        prepareExpList(foods);
+                        listSeller = mainViewModel.getListSeller();
+                        childMapping = mainViewModel.getChildMapping();
+                        prepareExpList();
                     }
                 });
     }
 
+    /**
+     * Create a menu action bar layout
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -83,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * set event handler on menu item
+     * @param item item of menu
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = null;
@@ -113,22 +125,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * prepare the adapter for list of food
-     * @param foods
      */
-    private void prepareExpList(ArrayList<Food> foods) {
+    private void prepareExpList() {
         // ListView on child click listener
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        listSeller.get(groupPosition).getName()
-                                + " : "
-                                + childMapping.get(
-                                listSeller.get(groupPosition)).get(
-                                childPosition).getName(), Toast.LENGTH_SHORT)
-                        .show();
+
                 Intent intent = new Intent(MainActivity.this, DetailMenu.class);
                 intent.putExtra("FOOD", childMapping.get(listSeller.get(groupPosition))
                         .get(childPosition));
@@ -138,47 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        listSeller = new ArrayList<>();
-        childMapping = new HashMap<>();
-        for (Food food :
-                foods) {
-            inputDistinctSeller(food.getSeller(), listSeller);
-        }
-        //mapping seller dan list food
-        for (Seller mSeller : listSeller) {
-            ArrayList<Food> foodTemp = new ArrayList<>();
-            for (Food tFood : foods) {
-                if (tFood.getSeller().getId() == mSeller.getId()) {
-                    foodTemp.add(tFood);
-                }
-            }
-            childMapping.put(mSeller, foodTemp);
-        }
-
         listAdapter = new MainListAdapter(MainActivity.this, listSeller, childMapping);
         expListView.setAdapter(listAdapter);
-    }
-
-    /**
-     * store distinct seller to the list of seller
-     * @param seller seller object
-     * @param listSeller list of seller variable
-     */
-    private void inputDistinctSeller(Seller seller, ArrayList<Seller> listSeller) {
-        if (listSeller != null) {
-            boolean isSeller = false;
-            //mengecheck apakah ada seller yang sama pada list
-            for (Seller tSeller : listSeller) {
-                if (seller.getId() == tSeller.getId()) {
-                    isSeller = true;
-                }
-            }
-            if (!isSeller) {
-                //memasukan seller baru ke list jika seller belum ada
-                listSeller.add(seller);
-            }
-        } else {
-            listSeller.add(seller);
-        }
     }
 }

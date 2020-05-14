@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +21,7 @@ import zain.aqdam.jfood_android.R;
 import zain.aqdam.jfood_android.repository.UserPreference;
 import zain.aqdam.jfood_android.model.Customer;
 import zain.aqdam.jfood_android.model.SessionLogin;
+import zain.aqdam.jfood_android.repository.UserRepository;
 
 /**
  * LoginActivity is used to create login interface for
@@ -73,7 +75,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
-                    loginRequest(inputEmail, inputPassword);
+                    boolean login = UserRepository.loginRequest(inputEmail, inputPassword,
+                            LoginActivity.this);
+                    if(login){
+                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        mainIntent.putExtra("ID", session);
+                        startActivity(mainIntent);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Login Failed",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -83,35 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent moveIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(moveIntent);
-            }
-        });
-    }
-
-    /**
-     * provide request for login validation from API
-     * @param inputEmail email of the customer account
-     * @param inputPassword password of the customer account
-     */
-    private void loginRequest(String inputEmail, String inputPassword){
-        JFoodApiService jFoodApiService = ApiClient.getClient(ApiClient.JFood_URL)
-                .create(JFoodApiService.class);
-        Call<Customer> call = jFoodApiService.loginCustomer(inputEmail, inputPassword);
-        call.enqueue(new Callback<Customer>() {
-            @Override
-            public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if (response.isSuccessful()) {
-                    session.setCustomerId(response.body().getId());
-                    mUserPreference.setUser(session);
-                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    mainIntent.putExtra("ID", session);
-                    startActivity(mainIntent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Customer> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Login Failed",
-                        Toast.LENGTH_SHORT).show();
             }
         });
     }

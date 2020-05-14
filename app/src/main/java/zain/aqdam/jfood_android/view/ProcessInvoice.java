@@ -108,9 +108,9 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
         String inputPromo = edtPromo.getText().toString().trim();
         switch (v.getId()){
             case R.id.btn_makeInvoice:
-                if(paymentType.equals("Cash")){
+                if(paymentType=="Cash"){
                     createCashInvoiceRequest();
-                }else if(paymentType.equals("Cashless")){
+                }else if(paymentType=="Cashless"){
                     createCashlessInvoiceRequest(inputPromo);
                 }
                 break;
