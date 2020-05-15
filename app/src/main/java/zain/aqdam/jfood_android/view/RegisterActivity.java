@@ -1,5 +1,6 @@
 package zain.aqdam.jfood_android.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,10 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
+import zain.aqdam.jfood_android.model.SessionLogin;
 import zain.aqdam.jfood_android.repository.ApiClient;
 import zain.aqdam.jfood_android.repository.JFoodApiService;
 import zain.aqdam.jfood_android.R;
 import zain.aqdam.jfood_android.model.Customer;
+import zain.aqdam.jfood_android.repository.UserPreference;
 import zain.aqdam.jfood_android.repository.UserRepository;
 
 /**
@@ -61,12 +65,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
-                    registerRequest(inputEmail, inputName, inputPassword);
+                    registerRequest(inputName, inputEmail, inputPassword);
                 }
 
             }
         });
     }
+
 
     /**
      * provide request for register new user from

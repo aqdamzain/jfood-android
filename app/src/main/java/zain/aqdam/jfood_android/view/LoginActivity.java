@@ -21,7 +21,6 @@ import zain.aqdam.jfood_android.R;
 import zain.aqdam.jfood_android.repository.UserPreference;
 import zain.aqdam.jfood_android.model.Customer;
 import zain.aqdam.jfood_android.model.SessionLogin;
-import zain.aqdam.jfood_android.repository.UserRepository;
 
 /**
  * LoginActivity is used to create login interface for
@@ -75,16 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
-                    boolean login = UserRepository.loginRequest(inputEmail, inputPassword,
-                            LoginActivity.this);
-                    if(login){
-                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        mainIntent.putExtra("ID", session);
-                        startActivity(mainIntent);
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Login Failed",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    loginRequest(inputEmail, inputPassword);
                 }
             }
         });
@@ -94,6 +84,31 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent moveIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(moveIntent);
+            }
+        });
+    }
+
+    private void loginRequest(String inputEmail, String inputPassword){
+        final UserPreference userPreference = new UserPreference(this);
+        final SessionLogin session = new SessionLogin();
+        JFoodApiService jFoodApiService = ApiClient.getClient(ApiClient.JFood_URL)
+                .create(JFoodApiService.class);
+        Call<Customer> call = jFoodApiService.loginCustomer(inputEmail, inputPassword);
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.isSuccessful()) {
+                    session.setCustomerId(response.body().getId());
+                    userPreference.setUser(session);
+                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    mainIntent.putExtra("ID", session);
+                    startActivity(mainIntent);
+                }
+            }
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Login Failed",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
