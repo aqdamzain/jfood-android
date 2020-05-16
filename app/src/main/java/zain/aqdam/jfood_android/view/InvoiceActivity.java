@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +28,13 @@ import zain.aqdam.jfood_android.repository.OrderRepository;
 public class InvoiceActivity extends AppCompatActivity implements View.OnClickListener {
     private Invoice invoice;
     private SessionLogin session;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice);
+        progressBar = findViewById(R.id.progressBar);
         invoice = getIntent().getParcelableExtra("INVOICE");
         session = getIntent().getParcelableExtra("ID");
         final TextView tvInvoiceId = findViewById(R.id.tv_invoiceId);
@@ -60,9 +64,11 @@ public class InvoiceActivity extends AppCompatActivity implements View.OnClickLi
         Call<Invoice> call = null;
         switch (v.getId()){
             case R.id.btn_pay:
+                progressBar.setVisibility(View.VISIBLE);
                 call = jFoodApiService.changeInvoiceStatus(invoice.getId(), "Finished");
                 break;
             case R.id.btn_cancel:
+                progressBar.setVisibility(View.VISIBLE);
                 call = jFoodApiService.changeInvoiceStatus(invoice.getId(), "Cancelled");
                 break;
         }
@@ -70,6 +76,7 @@ public class InvoiceActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<Invoice> call, Response<Invoice> response) {
                 if(response.body() != null){
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(
                             getApplicationContext(), "Invoice Status Has Changed"
                             , Toast.LENGTH_SHORT)
@@ -89,6 +96,7 @@ public class InvoiceActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(Call<Invoice> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(
                         getApplicationContext(), "Failed Request to server"
                         , Toast.LENGTH_SHORT)

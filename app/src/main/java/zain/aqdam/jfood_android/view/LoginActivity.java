@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtEmail;
     private Button btnLogin;
     private TextView tvRegister;
+    private ProgressBar progressBar;
     /**
      * interface to save login session
      */
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edt_password);
         btnLogin = findViewById(R.id.btn_login);
         tvRegister = findViewById(R.id.tv_register);
+        progressBar = findViewById(R.id.progressBar);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
+                    progressBar.setVisibility(View.VISIBLE);
                     loginRequest(inputEmail, inputPassword);
                 }
             }
@@ -98,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
                     session.setCustomerId(response.body().getId());
                     userPreference.setUser(session);
                     Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -107,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Customer> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Login Failed",
                         Toast.LENGTH_SHORT).show();
             }

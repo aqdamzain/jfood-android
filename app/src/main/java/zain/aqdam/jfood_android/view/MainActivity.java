@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,22 +39,26 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<Seller, ArrayList<Food>> childMapping;
     private MainViewModel mainViewModel;
     private SessionLogin session;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progressBar);
         session = getIntent().getParcelableExtra("ID");
         expListView = findViewById(R.id.lvExp);
         mainViewModel = new ViewModelProvider(this, new ViewModelProvider
                 .NewInstanceFactory()).get(MainViewModel.class);
         mainViewModel.setFoodsRequest();
+        progressBar.setVisibility(View.VISIBLE);
         mainViewModel.getFoodsRequest().observe(MainActivity.this,
                 new Observer<ArrayList<Food>>() {
                     @Override
                     public void onChanged(ArrayList<Food> foods) {
                         listSeller = mainViewModel.getListSeller();
                         childMapping = mainViewModel.getChildMapping();
+                        progressBar.setVisibility(View.GONE);
                         prepareExpList();
                     }
                 });
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     searchView.onActionViewCollapsed();
+                    progressBar.setVisibility(View.VISIBLE);
                     mainViewModel.setCategoryRequest(query);
                     return true;
                 }

@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * API client for request to the server
  */
 public class ApiClient {
-    public static final String JFood_URL = "http://10.0.2.2:8080/";
+    public static final String JFood_URL = "https://damp-taiga-84382.herokuapp.com/"; //"http://10.0.2.2:8080/";
 
     public static Retrofit getClient(String baseUrl) {
         return new Retrofit.Builder()

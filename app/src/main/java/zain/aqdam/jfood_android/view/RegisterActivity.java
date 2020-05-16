@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,6 @@ import zain.aqdam.jfood_android.repository.JFoodApiService;
 import zain.aqdam.jfood_android.R;
 import zain.aqdam.jfood_android.model.Customer;
 import zain.aqdam.jfood_android.repository.UserPreference;
-import zain.aqdam.jfood_android.repository.UserRepository;
 
 /**
  * is used to create register interface for
@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private Button btnRegister;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_emailRegister);
         edtPassword = findViewById(R.id.edt_passwordRegister);
         btnRegister = findViewById(R.id.btn_register);
+        progressBar = findViewById(R.id.progressBar);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if (!isEmptyFields) {
+                    progressBar.setVisibility(View.VISIBLE);
                     registerRequest(inputName, inputEmail, inputPassword);
                 }
 
@@ -90,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<Customer> call, retrofit2.Response<Customer> response) {
                 Toast.makeText(RegisterActivity.this, "Register Successful",
                         Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override

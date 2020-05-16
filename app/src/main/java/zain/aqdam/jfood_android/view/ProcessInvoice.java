@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
     private List<FoodOrder> foodOrders;
     private String paymentType;
     private SessionLogin session;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
         foodOrders = getIntent().getParcelableArrayListExtra("ORDER");
         final RecyclerView rvOrder = findViewById(R.id.recyclerView);
         final TextView tvTotPrice = findViewById(R.id.tv_PriceInvoice);
+        progressBar = findViewById(R.id.progressBar);
         tvPromo = findViewById(R.id.PromoLabel);
         tvPromo.setVisibility(View.GONE);
         edtPromo = findViewById(R.id.edt_promoCode);
@@ -108,6 +112,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
         String inputPromo = edtPromo.getText().toString().trim();
         switch (v.getId()){
             case R.id.btn_makeInvoice:
+                progressBar.setVisibility(View.VISIBLE);
                 if(paymentType=="Cash"){
                     createCashInvoiceRequest();
                 }else if(paymentType=="Cashless"){
@@ -133,10 +138,12 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
                             getApplicationContext(),
                             "Pesanan Berhasil Dibuat", Toast.LENGTH_SHORT)
                             .show();
+                    progressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(ProcessInvoice.this, HistoryActivity.class);
                     intent.putExtra("ID", session);
                     startActivity(intent);
                 }else{
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(
                             getApplicationContext(),
                             "Pesanan Gagal Dibuat", Toast.LENGTH_SHORT)
@@ -146,6 +153,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onFailure(Call<Invoice> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(
                         getApplicationContext(),
                         "Pesanan Gagal Dibuat", Toast.LENGTH_SHORT)
@@ -174,6 +182,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onResponse(Call<Invoice> call, Response<Invoice> response) {
                 if(response.body() != null){
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(
                             getApplicationContext(),
                             "Pesanan Berhasil Dibuat", Toast.LENGTH_SHORT)
@@ -182,6 +191,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
                     intent.putExtra("ID", session);
                     startActivity(intent);
                 }else{
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(
                             getApplicationContext(),
                             "Pesanan Gagal Dibuat", Toast.LENGTH_SHORT)
@@ -191,6 +201,7 @@ public class ProcessInvoice extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onFailure(Call<Invoice> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(
                         getApplicationContext(),
                         "Pesanan Gagal Dibuat", Toast.LENGTH_SHORT)
